@@ -8,8 +8,8 @@ interface AuthState {
 }
 
 const useAuthStore = create<AuthState>((set) => ({
-    token: null, // Initial state for token
-    isAuthenticated: false, // Authentication status
+    token: null,
+    isAuthenticated: false,
 
     // Action to log in and store token
     login: (token) => set(() => ({
