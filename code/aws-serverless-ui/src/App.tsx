@@ -5,7 +5,7 @@ import useAuthStore from './store/auth';
 
 function App() {
   const onLoginClick = () => {
-    window.location.href = "https://rh-serverless.auth.eu-central-1.amazoncognito.com/login?client_id=g44f8eom32u27d3g6ulcirudv&response_type=token&scope=aws.cognito.signin.user.admin+email+openid&redirect_uri=http%3A%2F%2Fserverless.roby-hartono.de";
+    window.location.href = "https://rh-serverless.auth.eu-central-1.amazoncognito.com/login?client_id=g44f8eom32u27d3g6ulcirudv&response_type=token&scope=aws.cognito.signin.user.admin+email+openid&redirect_uri=https%3A%2F%2Fserverless.roby-hartono.de";
   };
 
   const onLogoutClick = () => {
