@@ -1,7 +1,7 @@
 import { DynamoDBClient } from "@aws-sdk/client-dynamodb";
 import {
-    DeleteCommand,
-    DynamoDBDocumentClient
+    DynamoDBDocumentClient,
+    GetCommand
 } from "@aws-sdk/lib-dynamodb";
 
 const client = new DynamoDBClient({});
@@ -16,16 +16,16 @@ export const handler = async (event) => {
     };
 
     try {
-        const data = await dynamo.send(new DeleteCommand(params));
+        const data = await dynamo.send(new GetCommand(params));
         return {
             statusCode: 200,
-            body: `Deleted user ${event.pathParameters.id}`,
+            body: data.Item
         };
     } catch (error) {
         console.error(error);
         return {
             statusCode: 500,
-            body: JSON.stringify({ error: 'Could not delete user' }),
+            body: JSON.stringify({ error: 'Get user' }),
         };
     }
 };

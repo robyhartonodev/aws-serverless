@@ -8,8 +8,6 @@ const client = new DynamoDBClient({});
 
 const dynamo = DynamoDBDocumentClient.from(client);
 
-const tableName = process.env.TABLE_NAME_USER;
-
 export const handler = async (event) => {
     const params = {
         TableName: process.env.TABLE_NAME_USER,
