@@ -3,15 +3,16 @@ import { createRoot } from 'react-dom/client';
 import App from './App.tsx';
 import './index.css';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import MyGalery from './components/MyGalery.tsx';
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <App></App>
+    element: <App />
   },
   {
-    path: "/login",
-    element: <h1>Help 321</h1>
+    path: "/mygalery",
+    element: <MyGalery />
   }
 ]);
 
