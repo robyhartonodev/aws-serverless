@@ -19,13 +19,17 @@ export const handler = async (event) => {
         const data = await dynamo.send(new GetCommand(params));
         return {
             statusCode: 200,
-            body: data.Item
+            body: JSON.stringify(data.Item),
+            headers: {
+              "Access-Control-Allow-Origin": "*",
+              "Access-Control-Allow-Credentials": true
+            }
         };
     } catch (error) {
         console.error(error);
         return {
             statusCode: 500,
-            body: JSON.stringify({ error: 'Get user' }),
+            body: JSON.stringify({ error: 'Get user failed' }),
         };
     }
 };

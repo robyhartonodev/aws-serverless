@@ -88,6 +88,54 @@ function App() {
     }
   };
 
+  const callGetUserApiLambdaDynamoDB = async () => {
+    const headers = new Headers({
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + idToken || ''
+    });
+
+    try {
+      const response = await fetch("https://0ksc0b2zw6.execute-api.eu-central-1.amazonaws.com/prod/users/xdd", {
+        method: 'GET',
+        headers: headers,
+      });
+
+      // Check if the response is okay (status in the range 200-299)
+      if (!response.ok) {
+        // Get the error message from the response
+        const errorData = await response.json(); // or response.text() if the response is not JSON
+        throw new Error(`HTTP error! status: ${response.status}, message: ${errorData.message || 'Unknown error'}`);
+      }
+
+      // If response is okay, parse the JSON data
+      const data = await response.json();
+      setUser(data);
+    } catch (error) {
+      setUser("Failed GET User Response with ID: xdd");
+    }
+  };
+
+  const [user, setUser] = useState<any>(null);
+  const getUser = () => {
+    if (user) {
+      return (
+        <div className='text-xl'>
+          {user && `User: ${JSON.stringify(user)}`}
+        </div>
+      );
+    } else {
+      return <></>;
+    }
+  };
+
+  const getUserButton = () => {
+    if (idToken) {
+      return <Button variant='outline' className='w-full bg-indigo-500 text-white hover:text-black' onClick={callGetUserApiLambdaDynamoDB}>Get User DynamoDB</Button>;
+    } else {
+      return <></>;
+    }
+  };
+
   return (
     <>
       <div className='flex min-h-screen w-screen justify-between'>
@@ -98,10 +146,12 @@ function App() {
           <Button variant='outline' className='w-full bg-orange-400 text-white hover:text-black' onClick={onLoginClick}>Login</Button>
           <Button variant='outline' className='w-full bg-red-400 text-white hover:text-black' onClick={onLogoutClick}>Logout</Button>
           <Button variant='outline' className='w-full bg-green-500 text-white hover:text-black' onClick={callApiGatewayLambda}>Sample REST API Get Call</Button>
-
           {divApiResponse()}
 
           {myGalleryButton()}
+
+          {getUserButton()}
+          {getUser()}
         </div>
       </div>
     </>
