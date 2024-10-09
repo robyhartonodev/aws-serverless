@@ -1,9 +1,10 @@
+import useAuthStore from "@/store/auth";
+import { FC, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "./ui/button";
-import { FC, useEffect } from "react";
-import useAuthStore from "@/store/auth";
+import CreateUpdateFileForm from "./CreateUpdateFileForm";
 
-interface UserImage {
+export interface UserImage {
     id: string;
     userId: string;
     title: string;
@@ -46,6 +47,8 @@ function MyGalery() {
         }
     ];
 
+    const [selectedUserFile, setSelectedUserFile] = useState<UserImage | null | undefined>(null);
+
     const UserItem: FC<UserImage> = ({ id, userId, title, imageUrl }) => {
         return (
             <div className="border border-gray-300 flex justify-between items-center h-96 rounded-md shadow-lg">
@@ -75,14 +78,14 @@ function MyGalery() {
             </div>
 
             <div className="flex space-x-2 p-4">
-                <Button className="bg-green-500">Create</Button>
-                <Button className="bg-blue-500">Edit</Button>
+                <CreateUpdateFileForm mode="create"></CreateUpdateFileForm>
+                <CreateUpdateFileForm mode="update"></CreateUpdateFileForm>
                 <Button className="bg-red-500">Delete</Button>
             </div>
 
             <div className="p-4 w-screen h-full space-y-4">
                 {
-                    testItems.map((item) => <UserItem id={item.id} userId={item.userId} title={item.title} imageUrl={item.imageUrl}></UserItem>)
+                    testItems.map((item) => <UserItem key={item.id} id={item.id} userId={item.userId} title={item.title} imageUrl={item.imageUrl}></UserItem>)
                 }
             </div>
         </div>
